@@ -1,4 +1,4 @@
-# trading-assistant-extension
+# Trading-assistant-extension
 
 📈 AI-Powered Trading Assistant (Browser Extension)
 Technologies: JavaScript, HTML/CSS, TradingView integration, Real-time WebSocket, AI APIs (planned), Firebase (for auth/logging), Python (future backtesting modules)
