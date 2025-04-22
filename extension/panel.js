@@ -40,4 +40,4 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     linkElement.href = message.url || "#";
   }
 });
-
+ 
