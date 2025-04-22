@@ -1,21 +1,34 @@
 {
   "manifest_version": 3,
-  "name": "Trading Assistant",
+  "name": "JARVIS Trading Assistant",
   "version": "1.0",
   "description": "Fetch and speak BTC price",
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-  "16": "icon.png",
-  "48": "icon.png",
-  "128": "icon.png"
-}
-
+  "icons": {
+    "16": "JARVIS.webp",
+    "48": "JARVIS.webp",
+    "128": "JARVIS.webp"
+  ``},
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "alarms",
+    "notifications",
+    "sidePanel"
   ],
   "host_permissions": [
-    "https://api.coingecko.com/"
+    "https://api.coingecko.com/",
+    "https://newsapi.org/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
   ]
 }
