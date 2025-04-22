@@ -21,23 +21,20 @@ speakBtn.addEventListener('click', () => {
   window.speechSynthesis.speak(speech);
 });
 
-// Receive message from background
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+// Single listener for background news
+chrome.runtime.onMessage.addListener((message) => {
   if (message.type === "speak-news") {
-    console.log("🧠 Incoming message from background:", message.text);
-    const speech = new SpeechSynthesisUtterance(message.text);
-    window.speechSynthesis.speak(speech);
-  }
-});
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === "speak-news") {
+    // 1) Speak it aloud
     const speech = new SpeechSynthesisUtterance(message.text);
     window.speechSynthesis.speak(speech);
 
-    // Also update clickable headline
-    const linkElement = document.getElementById('news-link');
-    linkElement.textContent = message.text;
-    linkElement.href = message.url || "#";
+    // 2) Update your clickable link
+    const linkEl = document.getElementById('news-link');
+    if (linkEl) {
+      linkEl.textContent = message.text;
+      linkEl.href         = message.url || '#';
+      linkEl.target       = '_blank';
+    }
   }
 });
- 
+
