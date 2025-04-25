@@ -1,6 +1,25 @@
 const API_KEY = "eb5ec517f8b14d9c8d93ed30dfff9cf3";
 const keyword = "inflation";
 
+// Log when background starts
+console.log("✅ JARVIS background script is running...");
+
+// Set side panel behavior ONCE when installed
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+  console.log("📌 Side panel behavior set.");
+});
+
+// Test notification on startup
+chrome.runtime.onStartup.addListener(() => {
+  chrome.notifications.create({
+    type: "basic",
+    iconUrl: "JARVIS.webp",
+    title: "JARVIS Booted",
+    message: "JARVIS is now monitoring the markets!"
+  });
+});
+
 // Run news check every 1 minute
 chrome.alarms.create("fetchNews", { periodInMinutes: 1 });
 
@@ -13,49 +32,28 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 
         if (articles && articles.length > 0) {
           const topHeadline = articles[0].title;
+          const newsUrl = articles[0].url;
+
           console.log("📰 Top economic news:", topHeadline);
 
+          // Show desktop notification
           chrome.notifications.create({
             type: "basic",
             iconUrl: "JARVIS.webp",
             title: "Market News Update",
             message: topHeadline
           });
-          chrome.runtime.onInstalled.addListener(() => {
-            chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
-          });
-          
-          chrome.runtime.onStartup.addListener(() => {
-            chrome.notifications.create({
-              type: "basic",
-              iconUrl: "JARVIS.webp",
-              title: "Test Icon",
-              message: "Is JARVIS.webp showing?"
-            });
-          });
-          
-          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if (!tabs || tabs.length === 0 || !tabs[0].id) {
-              console.warn("❌ No valid tab found to send message to.");
-              return;
-            }
 
-            chrome.tabs.sendMessage(tabs[0].id, {
-              type: "speak-news",
-              text: topHeadline,
-              url: articles[0].url
-            }, () => {
-              if (chrome.runtime.lastError) {
-                console.error("❌ Failed to send message:", chrome.runtime.lastError.message);
-              } else {
-                console.log("✅ Message sent to content.js");
-              }
-            });
-            
+          // Send message to panel/content
+          chrome.runtime.sendMessage({
+            type: "speak-news",
+            text: topHeadline,
+            url: newsUrl
           });
-          
+        } else {
+          console.log("⚠️ No articles found.");
         }
       })
-      .catch(console.error);
+      .catch(err => console.error("❌ Fetch error:", err));
   }
 });
