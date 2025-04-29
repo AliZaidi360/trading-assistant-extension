@@ -1,9 +1,11 @@
+// Brain Context (memory)
 let context = {
     btcChange: 0,
     latestNews: "",
     lastUserQuery: ""
 };
 
+// Main Brain Logic
 function jarvisBrain(message, priceElementText) {
     message = message.toLowerCase().trim();
     context.lastUserQuery = message;
@@ -39,6 +41,7 @@ function jarvisBrain(message, priceElementText) {
     return "I'm monitoring the markets. Ask me about BTC, news, or trends!";
 }
 
+// Update context dynamically
 function updateContext(newData) {
     context = { ...context, ...newData };
 }

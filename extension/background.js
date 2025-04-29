@@ -34,7 +34,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
           const topHeadline = articles[0].title;
           const newsUrl = articles[0].url;
 
-          console.log("📰 Top economic news:", topHeadline);
+          console.log(" Top economic news:", topHeadline);
 
           // Show desktop notification
           chrome.notifications.create({
