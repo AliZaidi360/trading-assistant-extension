@@ -1,17 +1,16 @@
-// Brain Context (memory)
 let context = {
     btcChange: 0,
     latestNews: "",
     lastUserQuery: ""
 };
 
-// Main Brain Logic
+// Main Brain Function
 function jarvisBrain(message, priceElementText) {
     message = message.toLowerCase().trim();
     context.lastUserQuery = message;
 
     if (message.includes("btc") && context.btcChange >= 2) {
-        return `⚡ BTC has moved ${context.btcChange}% today. Stay alert for volatility!`;
+        return `BTC has moved ${context.btcChange}% today. Stay alert for volatility!`;
     }
 
     if (message.includes("btc") || message.includes("bitcoin")) {
@@ -30,21 +29,26 @@ function jarvisBrain(message, priceElementText) {
         return "The market trend is currently sideways with potential breakout zones.";
     }
 
-    if (message.includes("help")) {
-        return "You can ask about BTC price movements, latest news, or market trends.";
-    }
-
     if (message.includes("market")) {
         return "The market is volatile today. Stay cautious!";
     }
 
-    return "I'm monitoring the markets. Ask me about BTC, news, or trends!";
+    if (message.includes("hello") || message.includes("hi")) {
+        return "Hello! I am JARVIS, ready to help you with trading!";
+    }
+
+    if (message.includes("help")) {
+        return "You can ask me about BTC prices, market news, or current trends.";
+    }
+
+    return "I'm monitoring the markets. Feel free to ask me about anything trading-related!";
 }
 
-// Update context dynamically
+// Update Context Dynamically
 function updateContext(newData) {
     context = { ...context, ...newData };
 }
 
+// Expose to panel.js
 window.jarvisBrain = jarvisBrain;
 window.updateContext = updateContext;

@@ -54,10 +54,22 @@
       a:hover {
           text-decoration: underline;
       }
+      #new-chat-btn {
+  background-color: #ff4444;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#new-chat-btn:hover {
+  background-color: #cc0000;
+}
+
     </style>
     
-  <script src="brain.js"></script>
-  <script src="panel.js"></script>
 </head>
 <body>
   <h2>JARVIS Trading Assistant</h2>
@@ -75,8 +87,12 @@
       <h3>Market Alerts</h3>
       <ul id="alerts-list"></ul>
   </div>
+  <button id="new-chat-btn">New Chat</button>
+
   
 
-
 </body>
+<script src="brain.js"></script>
+<script src="panel.js"></script>
+
 </html>

@@ -1,13 +1,28 @@
-// ✅ Confirm content script is alive
-console.log("👋 content.js is running");
+console.log("[JARVIS Vision] Content script loaded.");
 
-// ✅ Single listener for all messages
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("📥 Content script received message:", message);
+// Check if we're on TradingView
+if (window.location.hostname.includes("tradingview.com")) {
+  console.log("[JARVIS Vision] TradingView detected.");
 
-  if (message.type === "speak-news") {
-    const speech = new SpeechSynthesisUtterance(message.text);
-    window.speechSynthesis.speak(speech);
-    console.log("🔊 Spoke:", message.text);
+  // Try to extract symbol and interval
+  function extractChartContext() {
+    const symbol = document.querySelector('[data-symbol-name]')?.textContent || "Unknown Symbol";
+    const interval = document.querySelector('[data-name="interval-select"]')?.textContent || "Unknown Interval";
+
+    console.log(`[JARVIS Vision] Symbol: ${symbol}, Interval: ${interval}`);
+
+    // Send this data to panel.js (via background if needed later)
+    chrome.runtime.sendMessage({
+      type: "chart-context",
+      symbol,
+      interval,
+    });
   }
-});
+
+  // Wait a bit in case DOM isn’t ready
+  setTimeout(extractChartContext, 2000);
+
+  // Also update if chart changes
+  const observer = new MutationObserver(extractChartContext);
+  observer.observe(document.body, { childList: true, subtree: true });
+}

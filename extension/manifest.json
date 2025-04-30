@@ -2,36 +2,31 @@
   "manifest_version": 3,
   "name": "JARVIS Trading Assistant",
   "version": "1.0",
-  "description": "An AI-powered trading assistant that observes, analyzes, and assists in real-time.",
-  "icons": {
-    "16": "JARVIS.webp",
-    "48": "JARVIS.webp",
-    "128": "JARVIS.webp"
-  },
+  "description": "An AI-powered trading assistant.",
+  "permissions": ["storage", "tabs", "scripting", "notifications", "alarms", "sidePanel"],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },
   "side_panel": {
     "default_path": "panel.html"
   },
-  "permissions": [
-    "storage",
-    "tabs",
-    "scripting",
-    "notifications",
-    "alarms",
-    "sidePanel"
-  ],
-  "host_permissions": [
-    "https://api.coingecko.com/",
-    "https://newsapi.org/",
-    "<all_urls>"
-  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "JARVIS.webp"
+    }
+  },
+  "icons": {
+    "16": "JARVIS.webp",
+    "48": "JARVIS.webp",
+    "128": "JARVIS.webp"
+  }
 }

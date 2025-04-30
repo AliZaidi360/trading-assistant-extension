@@ -2,12 +2,12 @@ const API_KEY = "eb5ec517f8b14d9c8d93ed30dfff9cf3";
 const keyword = "inflation";
 
 // Log when background starts
-console.log("✅ JARVIS background script is running...");
+console.log("JARVIS background script is running...");
 
 // Set side panel behavior ONCE when installed
 chrome.runtime.onInstalled.addListener(() => {
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
-  console.log("📌 Side panel behavior set.");
+  console.log("Side panel behavior set.");
 });
 
 // Test notification on startup
@@ -51,9 +51,9 @@ chrome.alarms.onAlarm.addListener((alarm) => {
             url: newsUrl
           });
         } else {
-          console.log("⚠️ No articles found.");
+          console.log("No articles found.");
         }
       })
-      .catch(err => console.error("❌ Fetch error:", err));
+      .catch(err => console.error("Fetch error:", err));
   }
 });
